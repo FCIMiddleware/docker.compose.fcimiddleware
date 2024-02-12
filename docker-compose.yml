@@ -1,0 +1,73 @@
+version: "3.4"
+name: fcimiddleware
+services:
+  db_postgres:
+    image: postgres:16.1
+    restart: always
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=photoadmin
+      - POSTGRES_PASSWORD=photo2024
+    ports:
+      - '5432:5432'
+  
+  pg_admin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "mespagnac@photopost.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "80:80"
+    depends_on:
+      - db_postgres
+  
+  # netcore-portfolio-identity-api:
+  #   image: netcore-portfolio-identity-api:latest
+  #   container_name: identity-api
+  #   restart: always
+  #   ports:
+  #     - '5000:5000'
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: "Development"
+  #     ASPNETCORE_URLS: "http://+:5000"
+  #     ConnectionStrings__PostgreSQL: "Host=db_postgres;Port=5432;Database=pp_identity;Username=photoadmin;Password=photo2024"
+  #     JwtSettings__Key: "2357597e-71fd-41f6-9220-20cfbd134aaf"
+  #     JwtSettings__Issuer: "Netcore-Portfolio-Identity-Api"
+  #     JwtSettings__Audience: "Netcore-Portfolio-Identity-Api-Users"
+  #     JwtSettings__DurationInMinutes: 360
+  #     Papertrail__host: "logs5.papertrailapp.com"
+  #     Papertrail__port: 41847
+  
+  # netcore-portfolio-web-authentication:
+  #   image: netcore-portfolio-web-authentication:latest
+  #   container_name: web-authentication
+  #   restart: always
+  #   ports:
+  #     - '8000:8000'
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: "Development"
+  #     ASPNETCORE_URLS: "http://+:8000"
+  #     ApiUrls__ApiIdentityUrl: "http://127.0.0.1:5000/"
+  #     ApiUrls__WebPageUrl: "http://127.0.0.1:8001/"
+  #     Papertrail__host: "logs5.papertrailapp.com"
+  #     Papertrail__port: 41847
+  
+  # netcore-portfolio-web:
+  #   image: netcore-portfolio-web:latest
+  #   container_name: web
+  #   restart: always
+  #   ports:
+  #     - '8001:8001'
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: "Development"
+  #     ASPNETCORE_URLS: "http://+:8001"
+  #     ApiUrls__AuthenticacionUrl: "http://127.0.0.1:8000/"
+  #     ApiUrls__ApiGatewayUrl: "http://127.0.0.1:5001/"
+  #     Papertrail__host: "logs5.papertrailapp.com"
+  #     Papertrail__port: 41847
+
+networks:
+  default:
+    external: true
+    name: bankingNetwork
