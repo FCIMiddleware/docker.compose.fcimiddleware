@@ -22,22 +22,17 @@ services:
     depends_on:
       - db_postgres
   
-  # netcore-portfolio-identity-api:
-  #   image: netcore-portfolio-identity-api:latest
-  #   container_name: identity-api
-  #   restart: always
-  #   ports:
-  #     - '5000:5000'
-  #   environment:
-  #     ASPNETCORE_ENVIRONMENT: "Development"
-  #     ASPNETCORE_URLS: "http://+:5000"
-  #     ConnectionStrings__PostgreSQL: "Host=db_postgres;Port=5432;Database=pp_identity;Username=photoadmin;Password=photo2024"
-  #     JwtSettings__Key: "2357597e-71fd-41f6-9220-20cfbd134aaf"
-  #     JwtSettings__Issuer: "Netcore-Portfolio-Identity-Api"
-  #     JwtSettings__Audience: "Netcore-Portfolio-Identity-Api-Users"
-  #     JwtSettings__DurationInMinutes: 360
-  #     Papertrail__host: "logs5.papertrailapp.com"
-  #     Papertrail__port: 41847
+  netcore.fcimiddleware.fondos.api:
+    image: netcore.fcimiddleware.fondos.api:latest
+    container_name: fondos-api
+    restart: always
+    ports:
+      - '5000:5000'
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:5000"
+      ConnectionStrings__WritePostgreSQL: "Host=db_postgres;Port=5432;Database=fcim_fondos;Username=photoadmin;Password=photo2024"
+      ConnectionStrings__ReadPostgreSQL: "Host=db_postgres;Port=5432;Database=fcim_fondos;Username=photoadmin;Password=photo2024"
   
   # netcore-portfolio-web-authentication:
   #   image: netcore-portfolio-web-authentication:latest
